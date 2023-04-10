@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<ul></ul>
+		<button id="btn"></button>
+		<script>
+			// function View(url, data, dom, flag) {
+			// 	if (navigator.onLine) {
+			// 		// 离线取缓存
+			// 	}
+			// 	if (localStorage.getItem('list') && !flag) {
+			// 		var arr = JSON.parse(localStorage.getItem('list'))
+			// 		let html = ``
+			// 		arr.forEach((ele, index) => {
+			// 			htmlStr += `<li>${ele.name}</li>`
+			// 		})
+			// 		dom.innerHTml = htmlStr
+			// 	} else {
+			// 		// 获取数据功能
+			// 		$.ajax({
+			// 			url,
+			// 			params,
+			// 			success(json) {
+			// 				const arr = JSON.parse(json)
+			// 				localStorage.setItem('list', json)
+			// 				// 渲染数据
+			// 				let html = ``
+			// 				arr.forEach((ele, index) => {
+			// 					htmlStr += `<li>${ele.name}</li>`
+			// 				})
+			// 				dom.innerHTml = htmlStr
+			// 			}
+			// 		})
+			// 	}
+			// }
+			// View('xxx', 'xxx', ul)
+			// const btn = document.getElementById('btn')
+			// btn.onclick = () => {
+			// 	View('xxx', 'xxx', ul.true)
+			// }
+
+			function GetData(callbackArr) {
+				this.getData = (url, params) => {
+					$.ajax({
+						url,
+						params,
+						success(json) {
+							callbackArr.forEach((el) => {
+								el.do(json)
+							})
+						}
+					})
+				}
+			}
+
+			// 渲染
+			function Render(dom) {
+				this.do = (data) => {
+					let html = ``
+					arr.forEach((ele, index) => {
+						htmlStr += `<li>${ele.name}</li>`
+					})
+					dom.innerHTml = htmlStr
+				}
+			}
+			// 数据缓存
+			function CacheData(type) {
+				this.do = (data) => {
+					localStorage.setItem(type, data)
+				}
+				this.returnCache = () => {
+					return localStorage.getItem(type)
+				}
+			}
+
+			const oR = new Render(ul)
+			const oC = new CacheData('list')
+			const myData = new GetData([oR, oC])
+			myData.getData('xxxx', 'xxx')
+			// 增加功能，离线情况，取缓存数据，并且按钮点击也不通过数据请求
+			// 在线情况，缓存获取数据，点击按钮通过网络获取
+			if (navigator.onLine) {
+				if (oC.returnCache()) {
+					oR.do(oC.returnCache())
+				} else {
+					myData.getData('xxx', xxx)
+				}
+			} else {
+				if (oC.returnCache()) {
+					oR.do(oC.returnCache())
+				}
+			}
+			btn.onclick = () => {
+				myData.getData('xxx', 'xxx')
+			}
+		</script>
+	</body>
+</html>
